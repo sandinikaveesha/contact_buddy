@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Components/contact_details_item.dart';
-import '../Components/search_bar.dart';
+import '../Components/custom_text.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,13 +21,17 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const SearchBar(),
+              CustomText(icon: Icons.search_outlined, hintText: "Search"),
               const SizedBox(height: 30),
               Expanded(
                   child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return const ContactDetailsItem();
+                  return const ContactDetailsItem(
+                    name: 'Kate',
+                    phoneNo: '+94 71 779 494 5',
+                    id: 2,
+                  );
                 },
               ))
             ],

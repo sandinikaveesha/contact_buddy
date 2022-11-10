@@ -1,3 +1,5 @@
+import 'package:contact_buddy/Screens/create_contact_screen.dart';
+import 'package:contact_buddy/Screens/home_screen.dart';
 import 'package:contact_buddy/Screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
         canvasColor: const Color.fromARGB(193, 23, 30, 30),
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      home: const HomeScreen(),
     );
   }
 }
