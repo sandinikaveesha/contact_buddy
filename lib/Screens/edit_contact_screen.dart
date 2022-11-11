@@ -1,11 +1,12 @@
-import 'package:contact_buddy/Components/avatar.dart';
-import 'package:contact_buddy/Components/custom_text.dart';
 import 'package:flutter/material.dart';
 
-class EditContactScreen extends StatelessWidget {
-  const EditContactScreen({Key? key, required this.id}) : super(key: key);
+import '../Components/avatar.dart';
+import '../Components/button.dart';
+import '../Components/custom_text.dart';
 
-  final int id;
+class EditContactScreen extends StatelessWidget {
+  const EditContactScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,23 +32,27 @@ class EditContactScreen extends StatelessWidget {
               height: 40,
             ),
             CustomText(
-              icon: Icons.person_add_alt_outlined,
+              icon: Icons.person_add_alt_rounded,
               hintText: "Name",
             ),
             const SizedBox(
               height: 15,
             ),
             CustomText(
-              icon: Icons.phone_outlined,
+              icon: Icons.phone_rounded,
               hintText: "Phone",
             ),
             const SizedBox(
               height: 15,
             ),
             CustomText(
-              icon: Icons.email_outlined,
+              icon: Icons.email_rounded,
               hintText: "Email",
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Button(buttonText: "Save Changes",)
           ],
         ),
       ),

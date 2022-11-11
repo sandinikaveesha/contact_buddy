@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Components/avatar.dart';
+import '../Components/button.dart';
 import '../Components/custom_text.dart';
 
 class CreateContactScreen extends StatelessWidget {
@@ -22,29 +23,35 @@ class CreateContactScreen extends StatelessWidget {
         child: Column(
           children: [
             const Center(
-                child: Avatar(
-                    imagePath: "assets/images/avatar.png", imageRadius: 40)),
+              child: Avatar(
+                  imagePath: "assets/images/avatar.png", imageRadius: 40),
+            ),
             const SizedBox(
               height: 40,
             ),
             CustomText(
-              icon: Icons.person_add_alt_outlined,
+              icon: Icons.person_add_alt_rounded,
               hintText: "Name",
             ),
             const SizedBox(
               height: 15,
             ),
             CustomText(
-              icon: Icons.phone_outlined,
+              icon: Icons.phone_rounded,
               hintText: "Phone",
             ),
             const SizedBox(
               height: 15,
             ),
             CustomText(
-              icon: Icons.email_outlined,
+              icon: Icons.email_rounded,
               hintText: "Email",
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Button(buttonText: "Create Contact",),
+
           ],
         ),
       ),

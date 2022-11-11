@@ -1,6 +1,6 @@
-import 'package:contact_buddy/Screens/create_contact_screen.dart';
-import 'package:contact_buddy/Screens/edit_contact_screen.dart';
+import 'package:contact_buddy/Screens/display_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import 'avatar.dart';
 
@@ -16,11 +16,11 @@ class ContactDetailsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () => {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => EditContactScreen(id: id)),
-        );
+          MaterialPageRoute(builder: (context) => const DisplayDetailsScreen()),
+        )
       },
       child: SizedBox(
         width: double.infinity,
@@ -59,7 +59,19 @@ class ContactDetailsItem extends StatelessWidget {
                           color: Colors.white),
                     ),
                   ],
-                )
+                ),
+                const SizedBox(
+                  width: 90,
+                ),
+                IconButton(
+                  onPressed: () async{
+                    await FlutterPhoneDirectCaller.callNumber('119');
+                  },
+                  icon: const Icon(
+                    Icons.phone,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
             const Divider(
