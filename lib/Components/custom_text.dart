@@ -5,10 +5,13 @@ class CustomText extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.hintText,
+    this.controller
   }) : super(key: key);
 
   final IconData icon;
   final String hintText;
+  final TextEditingController? controller;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,8 @@ class CustomText extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
+              
+              controller: controller,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   hintText: hintText,

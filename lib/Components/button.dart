@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button({Key? key, required this.buttonText}) : super(key: key);
+  const Button({Key? key, required this.buttonText, this.action}) : super(key: key);
 
   final String buttonText;
+  final VoidCallback? action;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class Button extends StatelessWidget {
       color: Colors.transparent,
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: action,
         style: ElevatedButton.styleFrom(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),

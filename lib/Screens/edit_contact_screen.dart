@@ -1,11 +1,40 @@
+import 'package:contact_buddy/Models/contact_model.dart';
+import 'package:contact_buddy/Screens/home_screen.dart';
+import 'package:contact_buddy/Utility/database_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../Components/avatar.dart';
 import '../Components/button.dart';
 import '../Components/custom_text.dart';
 
-class EditContactScreen extends StatelessWidget {
-  const EditContactScreen({Key? key}) : super(key: key);
+class EditContactScreen extends StatefulWidget {
+  const EditContactScreen({Key? key, required this.contact}) : super(key: key);
+
+  final ContactModel contact;
+
+  @override
+  State<EditContactScreen> createState() => _EditContactScreenState();
+}
+
+class _EditContactScreenState extends State<EditContactScreen> {
+
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  final _ctrlName = TextEditingController();
+  final _ctrlContact = TextEditingController();
+  final _ctrlEmail = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _databaseHelper = DatabaseHelper.instance;
+    _ctrlName.text = widget.contact.name.toString();
+    _ctrlContact.text = widget.contact.contact.toString();
+    _ctrlEmail.text = widget.contact.email.toString();
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +63,7 @@ class EditContactScreen extends StatelessWidget {
             CustomText(
               icon: Icons.person_add_alt_rounded,
               hintText: "Name",
+              controller: _ctrlName,
             ),
             const SizedBox(
               height: 15,
@@ -41,6 +71,7 @@ class EditContactScreen extends StatelessWidget {
             CustomText(
               icon: Icons.phone_rounded,
               hintText: "Phone",
+              controller: _ctrlContact,
             ),
             const SizedBox(
               height: 15,
@@ -48,14 +79,28 @@ class EditContactScreen extends StatelessWidget {
             CustomText(
               icon: Icons.email_rounded,
               hintText: "Email",
+              controller: _ctrlEmail,
             ),
             const SizedBox(
               height: 30,
             ),
-            const Button(buttonText: "Save Changes",)
+            Button(buttonText: "Save Changes", action: _update,)
           ],
         ),
       ),
     );
+  }
+
+  _update() async{
+    if(_ctrlName.text.isEmpty || _ctrlContact.text.isEmpty){
+      print('Required Field are missing');
+    }
+
+    widget.contact.name = _ctrlName.text;
+    widget.contact.contact = _ctrlContact.text;
+    widget.contact.email = _ctrlEmail.text;
+
+    await _databaseHelper.updateContact(widget.contact);
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
   }
 }

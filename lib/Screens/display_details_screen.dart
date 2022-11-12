@@ -1,15 +1,29 @@
 import 'package:contact_buddy/Components/avatar.dart';
+import 'package:contact_buddy/Models/contact_model.dart';
 import 'package:contact_buddy/Screens/edit_contact_screen.dart';
+import 'package:contact_buddy/Screens/home_screen.dart';
+import 'package:contact_buddy/Utility/database_helper.dart';
 import 'package:flutter/material.dart';
 
 class DisplayDetailsScreen extends StatefulWidget {
-  const DisplayDetailsScreen({Key? key}) : super(key: key);
+  DisplayDetailsScreen({Key? key, required this.contact}) : super(key: key);
+
+  final ContactModel contact;
 
   @override
   State<DisplayDetailsScreen> createState() => _DisplayDetailsScreenState();
 }
 
 class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
+
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _databaseHelper = DatabaseHelper.instance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +57,7 @@ class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: ((context) => const EditContactScreen()),
+                            builder: ((context) => EditContactScreen(contact:  widget.contact,)),
                           ),
                         );
                       },
@@ -89,10 +103,10 @@ class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
             const SizedBox(
               height: 10,
             ),
-            const Center(
+            Center(
               child: Text(
-                "Kate Tanner",
-                style: TextStyle(
+                widget.contact.name.toString(),
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -101,26 +115,26 @@ class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
             const SizedBox(
               height: 30,
             ),
-            const ListTile(
+            ListTile(
               tileColor: Colors.transparent,
-              leading: Icon(
+              leading: const Icon(
                 Icons.phone,
                 color: Colors.white,
               ),
-              title: Text("+94 71 688693 8",
-                  style: TextStyle(color: Colors.white)),
+              title: Text(widget.contact.contact.toString(),
+                  style: const TextStyle(color: Colors.white)),
             ),
             const SizedBox(
               height: 5,
             ),
-            const ListTile(
+            ListTile(
               tileColor: Colors.transparent,
-              leading: Icon(
+              leading: const Icon(
                 Icons.email,
                 color: Colors.white,
               ),
-              title: Text("katetanner@gmail.com",
-                  style: TextStyle(color: Colors.white)),
+              title: Text(widget.contact.email.toString(),
+                  style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -145,7 +159,10 @@ class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
                   child:
                       const Text("No", style: TextStyle(color: Colors.white))),
               TextButton(
-                onPressed: () {},
+                onPressed: () async{
+                    await _databaseHelper.deleteContact(widget.contact.id!);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                },
                 child: const Text(
                   "Delete",
                   style: TextStyle(color: Colors.red),
@@ -155,4 +172,6 @@ class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
             elevation: 24,
             backgroundColor: const Color.fromARGB(255, 53, 53, 53),
           ));
+
+    
 }
