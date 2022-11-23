@@ -40,7 +40,8 @@ class DatabaseHelper{
         ${ContactModel.columnID} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${ContactModel.columnName} TEXT NOT NULL,
         ${ContactModel.columnContact} TEXT NOT NULL,
-        ${ContactModel.columnEmail} TEXT
+        ${ContactModel.columnEmail} TEXT,
+        ${ContactModel.columnImg} TEXT
 
       )
     ''');
@@ -53,10 +54,10 @@ class DatabaseHelper{
   }
 
   //Fetch  Contact
-  Future<List<ContactModel>> getContacts() async{
+  Future<List<Map<String, dynamic>>> getContacts() async{
     Database db = await database;
-    List<Map> contacts = await db.query(ContactModel.tblName);
-    return contacts.length == 0 ? [] : contacts.map((e) => ContactModel.fromMap(e)).toList();
+    return await db.query(ContactModel.tblName);
+    //return contacts.length == 0 ? [] : contacts.map((e) => ContactModel.fromMap(e)).toList();
   }
 
   //Delete Contact

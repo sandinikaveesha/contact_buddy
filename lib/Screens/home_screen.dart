@@ -1,10 +1,8 @@
-import 'package:contact_buddy/Components/custom_bottom_navigation_bar.dart';
-import 'package:contact_buddy/Models/contact_model.dart';
-import 'package:contact_buddy/Utility/database_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../Components/contact_details_item.dart';
-import '../Components/custom_text.dart';
+import '../Components/custom_bottom_navigation_bar.dart';
+import '../Utility/database_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,8 +13,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List<ContactModel> _contacts = [];
-  List<ContactModel> _searchContacts = [];
+  List<Map<String, dynamic>> _contacts = [];
+  List<Map<String, dynamic>> _searchContacts = [];
 
   DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
@@ -31,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: const Color.fromRGBO(60, 60, 68, 100),
           title: const Text(
@@ -53,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             width: 10,
           ),
-          SizedBox(
+          const SizedBox(
             width: 30,
             height: 30,
             child: Icon(
@@ -68,13 +67,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: TextField(
               onChanged: (value)=> _search(value),
               style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: 'Search',
-                  hintStyle: const TextStyle(
+                  hintStyle:  TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white),
-                  contentPadding: const EdgeInsets.only(left: 15, right: 15),
+                  contentPadding: EdgeInsets.only(left: 15, right: 15),
                   border: InputBorder.none),
             ),
           ),
@@ -86,11 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.builder(
                 itemCount: _searchContacts.length,
                 itemBuilder: (context, index) {
+                  null;
                   return ContactDetailsItem(
-                   contact: _searchContacts[index],
+                   contact: _searchContacts[index]["contact"],
+                   name: _searchContacts[index]["name"],
+                   img: _searchContacts[index]["img"],
                   );
                 },
-              )),
+              ),
+              ),
             
             ],
           ),
@@ -100,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _showContacts() async{
-    List<ContactModel> contacts = await _databaseHelper.getContacts();
+    List<Map<String, dynamic>> contacts = await _databaseHelper.getContacts();
     setState(() {
       _contacts = contacts;
       _searchContacts = contacts;
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _search(String value){
     setState(() {
-      _searchContacts = _contacts.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
+      _searchContacts = _contacts.where((element) => element['name']!.toLowerCase().contains(value.toLowerCase())).toList();
     });
   }
 }

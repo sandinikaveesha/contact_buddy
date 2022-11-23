@@ -38,6 +38,7 @@ dependencies:
   google_nav_bar: ^5.0.6 
   sqflite: any
   path_provider: any
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

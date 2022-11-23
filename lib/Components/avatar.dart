@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
@@ -9,9 +11,7 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
                     radius: imageRadius,
-                    backgroundImage: AssetImage(
-                      imagePath,
-                    ),
+                    child: ClipRRect(child: Image.memory(Base64Decoder().convert(imagePath)), borderRadius: BorderRadius.circular(50.0),),
                     backgroundColor: Colors.white,
                   );
   }

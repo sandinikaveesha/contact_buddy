@@ -1,25 +1,43 @@
-import 'package:contact_buddy/Models/contact_model.dart';
-import 'package:contact_buddy/Screens/display_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import 'avatar.dart';
+import '../Models/contact_model.dart';
+import '../Screens/display_details_screen.dart';
+import '../Utility/convert_helper.dart';
 
-class ContactDetailsItem extends StatelessWidget {
+class ContactDetailsItem extends StatefulWidget {
   const ContactDetailsItem(
-      {Key? key, required this.contact})
+      {Key? key, required this.name, required this.contact, required this.img})
       : super(key: key);
 
-  final ContactModel contact;
+  final String contact;
+  final String name;
+  final String img;
+
+  @override
+  State<ContactDetailsItem> createState() => _ContactDetailsItemState();
+}
+
+class _ContactDetailsItemState extends State<ContactDetailsItem> {
+   String _profileImg = "";
+  @override
+  void initState() {
+   
+    super.initState();
+     _reloadProfilePic(widget.img); 
+  }
+
 
   @override
   Widget build(BuildContext context) {
+   
     return GestureDetector(
       onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DisplayDetailsScreen(contact:contact)),
-        )
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => DisplayDetailsScreen(contact:widget.contact)),
+        // )
       },
       child: SizedBox(
         width: double.infinity,
@@ -30,8 +48,8 @@ class ContactDetailsItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Avatar(
-                    imagePath: "assets/images/profile_image.jpg",
+                 Avatar(
+                    imagePath: _profileImg,
                     imageRadius: 30),
                 const SizedBox(
                   width: 10,
@@ -43,7 +61,7 @@ class ContactDetailsItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        contact.name!,
+                        widget.name,
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -53,7 +71,7 @@ class ContactDetailsItem extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        contact.contact!,
+                        widget.contact,
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
@@ -67,7 +85,7 @@ class ContactDetailsItem extends StatelessWidget {
                     width: 50,
                     child: IconButton(
                     onPressed: () async{
-                      await FlutterPhoneDirectCaller.callNumber('119');
+                      await FlutterPhoneDirectCaller.callNumber(widget.contact.toString());
                     },
                     icon: const Icon(
                       Icons.phone,
@@ -85,4 +103,12 @@ class ContactDetailsItem extends StatelessWidget {
       ),
     );
   }
+
+  _reloadProfilePic(file) {
+    if(file == null) return;
+    String image = file.toString();
+    setState(() {
+      _profileImg = image;
+    });
+}
 }
