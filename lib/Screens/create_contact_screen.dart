@@ -104,9 +104,7 @@ class _CreateContactScreenState extends State<CreateContactScreen> {
      stringImg = Convertor.imageToString(await imgFile!.readAsBytes());
      _contact.img = stringImg;
      _reloadProfilePic(stringImg);
-    });
-    
-    //print(stringImg);
+    });;
   }
 
   _reloadProfilePic(String file) async{
