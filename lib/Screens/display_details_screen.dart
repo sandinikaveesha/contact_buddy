@@ -30,6 +30,7 @@ class _DisplayDetailsScreenState extends State<DisplayDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

@@ -41,6 +41,7 @@ String _defultImage = "iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAACXBIWXMAA
 
   @override
   Widget build(BuildContext context) {
+    print(widget.contact.id.toString());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

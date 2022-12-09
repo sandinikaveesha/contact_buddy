@@ -123,7 +123,7 @@ class _CreateContactScreenState extends State<CreateContactScreen> {
     _contact.name = _ctrlName.text;
     _contact.contact = _ctrlContact.text;
     _contact.email = _ctrlEmail.text;
-
+    
     await _databaseHelper.createContact(_contact);
     Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
   }

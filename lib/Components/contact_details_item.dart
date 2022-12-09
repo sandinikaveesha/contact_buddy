@@ -35,9 +35,11 @@ class _ContactDetailsItemState extends State<ContactDetailsItem> {
           MaterialPageRoute(
               builder: (context) => DisplayDetailsScreen(
                     contact: ContactModel(
+                      id: widget.contactModel.id,
                       name: widget.contactModel.name,
                       contact: widget.contactModel.contact,
-                      img: widget.contactModel.img
+                      img: widget.contactModel.img,
+                      email: widget.contactModel.email,
                     ),
                      
                   )),

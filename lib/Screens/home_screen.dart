@@ -82,15 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 30),
             Expanded(
-              child: ListView.builder(
-                itemCount: _searchContacts.length,
-                itemBuilder: (context, index) {
-                  final contact = _searchContacts[index];
-                  return ContactDetailsItem(
-                    contactModel: ContactModel.fromMap(contact),
-                  );
-                },
-              ),
+              child: display(_searchContacts),
             ),
           ],
         ),
@@ -116,5 +108,25 @@ class _HomeScreenState extends State<HomeScreen> {
               element['name']!.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
+  }
+
+  display(list){
+    if(list.length == 0){
+      return Text("no result", style:TextStyle(color: Colors.white),);
+    }
+    else{
+return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  final contact = list[index];
+                  return ContactDetailsItem(
+                    contactModel: ContactModel.fromMap(contact),
+                  );
+                },
+              );
+             
+    }
+   
+    
   }
 }
